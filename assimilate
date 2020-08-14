@@ -1,0 +1,19 @@
+#! /bin/sh
+assimilate () {
+    __assimilate_output=$(assimilate_bin "$@")
+    __assimilate_exit_code=$?
+    if [ $__assimilate_exit_code -eq 0 ]; then
+        if eval "$__assimilate_output"; then
+            printf "%s assimilated!\n" "$__assimilate_output"
+            return 0
+        else
+            printf "%s failed to assimilate in this shell\n" "$__assimilate_output"
+            return 1
+        fi
+    else
+        printf "%s\n" "$__assimilate_output"
+        return $__assimilate_exit_code
+    fi
+}
+
+# vi: ft=sh
